@@ -176,6 +176,12 @@ int nextHandle = 0;
                                         completion:^(FIRUser *user, NSError *error) {
                                           [self sendResult:result forUser:user error:error];
                                         }];
+  } else if ([@"unlink" isEqualToString:call.method]) {
+    NSString *providerId = call.arguments[@"providerId"];
+    [[FIRAuth auth].currentUser unlinkFromProvider:providerId
+                                        completion:^(FIRUser *user, NSError *error) {
+                                          [self sendResult:result forUser:user error:error];
+                                        }];
   } else if ([@"updateProfile" isEqualToString:call.method]) {
     FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
     if (call.arguments[@"displayName"]) {

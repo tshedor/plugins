@@ -428,6 +428,19 @@ class FirebaseAuth {
     return currentUser;
   }
 
+  Future<FirebaseUser> unlink({
+    @required String providerId,
+  }) async {
+    final Map<dynamic, dynamic> data = await channel.invokeMethod(
+      'unlink',
+      <String, String>{
+        'providerId': providerId,
+      },
+    );
+    final FirebaseUser currentUser = new FirebaseUser._(data);
+    return currentUser;
+  }
+
   /// Sets the user-facing language code for auth operations that can be
   /// internationalized, such as [sendEmailVerification]. This language
   /// code should follow the conventions defined by the IETF in BCP47.

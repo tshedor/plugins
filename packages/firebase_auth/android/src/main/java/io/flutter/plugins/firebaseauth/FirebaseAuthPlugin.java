@@ -111,6 +111,9 @@ public class FirebaseAuthPlugin implements MethodCallHandler {
       case "linkWithFacebookCredential":
         handleLinkWithFacebookCredential(call, result);
         break;
+      case "unlink":
+        handleUnlink(call, result);
+        break;
       case "updateProfile":
         handleUpdateProfile(call, result);
         break;
@@ -369,6 +372,16 @@ public class FirebaseAuthPlugin implements MethodCallHandler {
     firebaseAuth
         .getCurrentUser()
         .linkWithCredential(credential)
+        .addOnCompleteListener(new SignInCompleteListener(result));
+  }
+
+  private void handleUnlink(MethodCall call, final Result result) {
+    @SuppressWarnings("unchecked")
+    Map<String, String> arguments = (Map<String, String>) call.arguments;
+    String providerId = arguments.get("providerId");
+    firebaseAuth
+        .getCurrentUser()
+        .unlink(providerId)
         .addOnCompleteListener(new SignInCompleteListener(result));
   }
 

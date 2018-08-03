@@ -247,6 +247,24 @@ void main() {
       );
     });
 
+    test('unlink', () async {
+      final FirebaseUser user = await auth.unlink(
+        providerId: kMockProviderId,
+      );
+      verifyUser(user);
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'unlink',
+            arguments: <String, String>{
+              'providerId': kMockProviderId,
+            },
+          ),
+        ],
+      );
+    });
+
     test('signInWithFacebook', () async {
       final FirebaseUser user = await auth.signInWithFacebook(
         accessToken: kMockAccessToken,
@@ -378,7 +396,7 @@ void main() {
 
     test('updateEmail', () async {
       final String updatedEmail = 'atestemail@gmail.com';
-      auth.updateEmail(email: updatedEmail);
+      await auth.updateEmail(email: updatedEmail);
       expect(
         log,
         <Matcher>[
