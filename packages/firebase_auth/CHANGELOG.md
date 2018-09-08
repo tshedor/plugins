@@ -1,3 +1,11 @@
+## 0.6.1
+
+* `FirebaseAuth` and `FirebaseUser` are now fully documented.
+* `PlatformExceptions` now report error codes as stated in docs.
+* Added support for `linkWithTwitterCredential` in `FirebaseAuth`.
+* **Breaking Change** Renamed `fetchProvidersForEmail` to its new name `fetchSignInMethodsForEmail`.
+* Credentials can now be unlinked from Accounts with new methods on `FirebaseUser`.
+
 ## 0.6.0
 
 * Added support for `updatePassword` in `FirebaseUser`.
