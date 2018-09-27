@@ -41,10 +41,9 @@ void main() {
             return mockHandleId++;
             break;
           case "sendPasswordResetEmail":
-          case "updateProfile":
-            return null;
-            break;
           case "updateEmail":
+          case "updatePassword":
+          case "updateProfile":
             return null;
             break;
           case "fetchProvidersForEmail":
@@ -377,13 +376,52 @@ void main() {
       );
     });
 
+    test('updateEmail', () async {
+      final FirebaseUser user = await auth.currentUser();
+      await user.updateEmail(kMockEmail);
+      expect(log, <Matcher>[
+        isMethodCall(
+          'currentUser',
+          arguments: null,
+        ),
+        isMethodCall(
+          'updateEmail',
+          arguments: <String, String>{
+            'email': kMockEmail,
+          },
+        ),
+      ]);
+    });
+
+    test('updatePassword', () async {
+      final FirebaseUser user = await auth.currentUser();
+      await user.updatePassword(kMockPassword);
+      expect(log, <Matcher>[
+        isMethodCall(
+          'currentUser',
+          arguments: null,
+        ),
+        isMethodCall(
+          'updatePassword',
+          arguments: <String, String>{
+            'password': kMockPassword,
+          },
+        ),
+      ]);
+    });
+
     test('updateProfile', () async {
       final UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
       userUpdateInfo.photoUrl = kMockPhotoUrl;
       userUpdateInfo.displayName = kMockDisplayName;
 
-      await auth.updateProfile(userUpdateInfo);
+      final FirebaseUser user = await auth.currentUser();
+      await user.updateProfile(userUpdateInfo);
       expect(log, <Matcher>[
+        isMethodCall(
+          'currentUser',
+          arguments: null,
+        ),
         isMethodCall(
           'updateProfile',
           arguments: <String, String>{
